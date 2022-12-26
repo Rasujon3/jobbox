@@ -66,7 +66,7 @@ export const authSlice = createSlice({
         state.error = "";
       })
       .addCase(createUser.rejected, (state, action) => {
-        state.isLoading = true;
+        state.isLoading = false;
         state.email = "";
         state.isError = true;
         state.error = action?.error?.message;
@@ -84,7 +84,7 @@ export const authSlice = createSlice({
         state.error = "";
       })
       .addCase(loginUser.rejected, (state, action) => {
-        state.isLoading = true;
+        state.isLoading = false;
         state.email = "";
         state.isError = true;
         state.error = action?.error?.message;
@@ -102,7 +102,7 @@ export const authSlice = createSlice({
         state.error = "";
       })
       .addCase(googleLogin.rejected, (state, action) => {
-        state.isLoading = true;
+        state.isLoading = false;
         state.email = "";
         state.isError = true;
         state.error = action?.error?.message;
