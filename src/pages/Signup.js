@@ -27,7 +27,8 @@ const Signup = () => {
   }, [password, confirmPassword]);
 
   const onSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
+    reset();
     disppatch(createUser({ email: data.email, password: data.password }));
   };
 
