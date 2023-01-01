@@ -7,9 +7,12 @@ import { useNavigate } from "react-router-dom";
 import loginImage from "../assets/login.svg";
 import { googleLogin, loginUser } from "../features/auth/authSlice";
 const Login = () => {
-  const { isLoading, email, error, isError } = useSelector(
-    (state) => state.auth
-  );
+  const {
+    isLoading,
+    user: { email },
+    error,
+    isError,
+  } = useSelector((state) => state.auth);
   const { register, handleSubmit, reset } = useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();
