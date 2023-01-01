@@ -7,14 +7,19 @@ import { useSelector } from "react-redux";
 import Loading from "../../components/reusable/Loading";
 
 const EmployerRegistration = () => {
+  const {
+    user: { email },
+  } = useSelector((state) => state.auth);
+  const { handleSubmit, register, control, reset } = useForm({
+    defaultValues: {
+      email,
+    },
+  });
   const [countries, setCountries] = useState([]);
-
-  const { handleSubmit, register, control, reset } = useForm();
   const term = useWatch({ control, name: "term" });
   const navigate = useNavigate();
   const [postUser, { isLoading, isError, isSuccess, error }] =
     useRegisterMutation();
-  const { email } = useSelector((state) => state.auth);
 
   const businessCategory = [
     "Automotive",
@@ -81,10 +86,10 @@ const EmployerRegistration = () => {
               Email
             </label>
             <input
-              // value={email}
+              className="cursor-not-allowed"
               type="email"
               id="email"
-              // disabled
+              disabled
               {...register("email")}
             />
           </div>
