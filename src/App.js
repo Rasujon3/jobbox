@@ -8,7 +8,7 @@ import routes from "./routes/routes";
 
 function App() {
   const { isLoading } = useSelector((state) => state.auth);
-  console.log(isLoading);
+
   const auth = getAuth();
   const dispatch = useDispatch();
   useEffect(() => {

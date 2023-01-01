@@ -10,7 +10,7 @@ const Navbar = () => {
   const {
     user: { email, role },
   } = useSelector((state) => state.auth);
-  console.log(email);
+
   const dispatch = useDispatch();
 
   const handleSignOut = () => {
