@@ -2,14 +2,19 @@ import React from "react";
 import meeting from "../assets/meeting.jpg";
 import { BsArrowRightShort, BsArrowReturnRight } from "react-icons/bs";
 import { useNavigate, useParams } from "react-router-dom";
-import { useApplyMutation, useJobByIdQuery } from "../features/job/jobApi";
+import {
+  useApplyMutation,
+  useJobByIdQuery,
+  useQuestionMutation,
+} from "../features/job/jobApi";
 import { useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
+import { useForm } from "react-hook-form";
 
 const JobDetails = () => {
   const { user } = useSelector((state) => state.auth);
   const { id } = useParams();
-  // console.log(id);
+  const { register, handleSubmit, reset } = useForm();
   const { data, isLoading, isError } = useJobByIdQuery(id);
   // console.log(data);
   const {
@@ -31,6 +36,7 @@ const JobDetails = () => {
   const navigate = useNavigate();
 
   const [apply] = useApplyMutation();
+  const [sendQuestion] = useQuestionMutation();
 
   const handleApply = () => {
     if (user.role === "employer") {
@@ -48,6 +54,17 @@ const JobDetails = () => {
     };
     console.log(data);
     apply(data);
+  };
+
+  const handleQuestion = (data) => {
+    const queData = {
+      ...data,
+      userId: user._id,
+      email: user.email,
+      jodId: _id,
+    };
+    sendQuestion(queData);
+    reset();
   };
 
   return (
@@ -147,19 +164,22 @@ const JobDetails = () => {
                 ""
               )}
 
-              <div className="flex gap-3 my-5">
-                <input
-                  placeholder="Ask a question..."
-                  type="text"
-                  className="w-full"
-                />
-                <button
-                  className="shrink-0 h-14 w-14 bg-primary/10 border border-primary hover:bg-primary rounded-full transition-all  grid place-items-center text-primary hover:text-white"
-                  type="button"
-                >
-                  <BsArrowRightShort size={30} />
-                </button>
-              </div>
+              <form onSubmit={handleSubmit(handleQuestion)}>
+                <div className="flex gap-3 my-5">
+                  <input
+                    placeholder="Ask a question..."
+                    type="text"
+                    className="w-full"
+                    {...register("question")}
+                  />
+                  <button
+                    className="shrink-0 h-14 w-14 bg-primary/10 border border-primary hover:bg-primary rounded-full transition-all  grid place-items-center text-primary hover:text-white"
+                    type="submit"
+                  >
+                    <BsArrowRightShort size={30} />
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
